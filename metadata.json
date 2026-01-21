@@ -1,0 +1,7 @@
+{
+  "name": "RevIQ Pan-India Hotel Revenue Intelligence",
+  "description": "A world-class senior revenue management tool to identify competitors, analyze OTA performance, detect city-level demand drivers, and generate AI-powered pricing recommendations.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
