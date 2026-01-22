@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { TrendingUp, AlertCircle, CheckCircle2, IndianRupee, Eye } from 'lucide-react';
+// Added missing ArrowUpRight icon import from lucide-react
+import { TrendingUp, AlertCircle, CheckCircle2, IndianRupee, Eye, ArrowUpRight } from 'lucide-react';
 import { PricingInsights } from '../types';
 
 interface Props {
@@ -9,58 +10,66 @@ interface Props {
 
 const DashboardCards: React.FC<Props> = ({ insights }) => {
   const statusColors = {
-    Critical: 'text-red-600 bg-red-50',
-    Warning: 'text-orange-600 bg-orange-50',
-    Optimal: 'text-emerald-600 bg-emerald-50'
+    Critical: 'text-white bg-brand-orange shadow-lg shadow-brand-orange/20',
+    Warning: 'text-brand-orange bg-brand-light border border-brand-orange/20',
+    Optimal: 'text-emerald-700 bg-emerald-50 border border-emerald-100'
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-        <div className="flex justify-between items-start mb-4">
-          <div className="p-2 bg-indigo-50 rounded-lg text-indigo-600">
-            <TrendingUp size={20} />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1">
+        <div className="flex justify-between items-start mb-6">
+          <div className="p-3 bg-brand-light rounded-2xl text-brand-orange">
+            <TrendingUp size={24} />
           </div>
-          <span className={`text-xs font-bold px-2 py-1 rounded-full ${statusColors[insights.status]}`}>
+          <span className={`text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full ${statusColors[insights.status]}`}>
             {insights.status}
           </span>
         </div>
-        <p className="text-slate-500 text-sm font-medium">Competitor Price Index</p>
-        <h3 className="text-2xl font-bold text-slate-800 mt-1">{insights.cpi}%</h3>
-        <p className="text-xs text-slate-400 mt-2">Target range: 95% - 105%</p>
+        <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Comp Price Index</p>
+        <h3 className="text-3xl font-black text-slate-900 mt-1 tracking-tight">{insights.cpi}%</h3>
+        <div className="w-full bg-slate-100 h-1 rounded-full mt-4 overflow-hidden">
+          <div className="bg-brand-orange h-full" style={{ width: `${Math.min(insights.cpi, 100)}%` }}></div>
+        </div>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-        <div className="flex justify-between items-start mb-4">
-          <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
-            <Eye size={20} />
+      <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1">
+        <div className="flex justify-between items-start mb-6">
+          <div className="p-3 bg-brand-light rounded-2xl text-brand-orange">
+            <Eye size={24} />
           </div>
         </div>
-        <p className="text-slate-500 text-sm font-medium">OTA Visibility Score</p>
-        <h3 className="text-2xl font-bold text-slate-800 mt-1">{insights.visibilityScore}/100</h3>
-        <p className="text-xs text-slate-400 mt-2">Combined MMT, Booking, Goibibo</p>
+        <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Visibility Index</p>
+        <h3 className="text-3xl font-black text-slate-900 mt-1 tracking-tight">{insights.visibilityScore}<span className="text-sm text-slate-300 ml-1">/100</span></h3>
+        <p className="text-[10px] font-bold text-slate-400 mt-3 flex items-center gap-1 uppercase tracking-tighter">
+           <CheckCircle2 size={12} className="text-emerald-500" /> Across major OTAs
+        </p>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-        <div className="flex justify-between items-start mb-4">
-          <div className="p-2 bg-emerald-50 rounded-lg text-emerald-600">
-            <IndianRupee size={20} />
+      <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 border-t-8 border-t-brand-orange">
+        <div className="flex justify-between items-start mb-6">
+          <div className="p-3 bg-brand-light rounded-2xl text-brand-orange shadow-inner">
+            <IndianRupee size={24} />
           </div>
         </div>
-        <p className="text-slate-500 text-sm font-medium">Recommended BAR</p>
-        <h3 className="text-2xl font-bold text-slate-800 mt-1">₹{insights.recommendedBar.toLocaleString()}</h3>
-        <p className="text-xs text-emerald-600 font-medium mt-2">+12% vs last week</p>
+        <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Suggested BAR</p>
+        <h3 className="text-3xl font-black text-brand-orange mt-1 tracking-tighter">₹{insights.recommendedBar.toLocaleString()}</h3>
+        <div className="flex items-center gap-1.5 mt-3">
+          {/* Use the newly imported ArrowUpRight icon */}
+          <ArrowUpRight size={14} className="text-emerald-500" />
+          <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">+12% Optimal</span>
+        </div>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-        <div className="flex justify-between items-start mb-4">
-          <div className="p-2 bg-amber-50 rounded-lg text-amber-600">
-            <AlertCircle size={20} />
+      <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1">
+        <div className="flex justify-between items-start mb-6">
+          <div className="p-3 bg-slate-100 rounded-2xl text-brand-brown">
+            <AlertCircle size={24} />
           </div>
         </div>
-        <p className="text-slate-500 text-sm font-medium">Revenue Opportunity</p>
-        <h3 className="text-2xl font-bold text-slate-800 mt-1">₹{insights.revenueOpportunity.toLocaleString()}</h3>
-        <p className="text-xs text-slate-400 mt-2">At-risk leakage monthly</p>
+        <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Leakage Risk</p>
+        <h3 className="text-3xl font-black text-brand-brown mt-1 tracking-tighter">₹{insights.revenueOpportunity.toLocaleString()}</h3>
+        <p className="text-[10px] font-bold text-slate-400 mt-3 uppercase tracking-tighter">Monthly projected variance</p>
       </div>
     </div>
   );

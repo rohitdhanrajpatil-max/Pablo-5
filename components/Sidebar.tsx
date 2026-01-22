@@ -6,8 +6,7 @@ import {
   TrendingUp, 
   CalendarClock, 
   Settings, 
-  ChevronRight,
-  BarChart3
+  ChevronRight
 } from 'lucide-react';
 import { DashboardTab } from '../types';
 
@@ -15,6 +14,17 @@ interface SidebarProps {
   activeTab: DashboardTab;
   setActiveTab: (tab: DashboardTab) => void;
 }
+
+const Logo: React.FC<{ size?: string }> = ({ size = "w-10 h-10" }) => (
+  <div className={`${size} relative overflow-hidden flex items-center justify-center font-black text-white text-xs tracking-tighter`}>
+    <div className="absolute inset-0 grid grid-cols-3">
+      <div className="bg-brand-brown h-full"></div>
+      <div className="bg-brand-orange h-full"></div>
+      <div className="bg-brand-brown h-full"></div>
+    </div>
+    <span className="relative z-10 scale-110">THV</span>
+  </div>
+);
 
 const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   const menuItems = [
@@ -27,12 +37,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   return (
     <div className="w-64 h-screen bg-white border-r border-slate-200 flex flex-col sticky top-0">
       <div className="p-6 border-b border-slate-100 flex items-center gap-3">
-        <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-          R
-        </div>
+        <Logo />
         <div>
           <h1 className="font-bold text-slate-800 text-lg">RevIQ</h1>
-          <p className="text-xs text-slate-400">Revenue Engine</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-brand-orange">by THV Group</p>
         </div>
       </div>
 
@@ -43,13 +51,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
             onClick={() => setActiveTab(item.id)}
             className={`w-full flex items-center justify-between p-3 rounded-xl transition-all duration-200 group ${
               activeTab === item.id 
-                ? 'bg-indigo-50 text-indigo-600' 
+                ? 'bg-brand-light text-brand-orange shadow-sm' 
                 : 'text-slate-500 hover:bg-slate-50'
             }`}
           >
             <div className="flex items-center gap-3">
-              <item.icon size={20} className={activeTab === item.id ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-600'} />
-              <span className="font-medium">{item.label}</span>
+              <item.icon size={20} className={activeTab === item.id ? 'text-brand-orange' : 'text-slate-400 group-hover:text-slate-600'} />
+              <span className="font-bold text-sm">{item.label}</span>
             </div>
             {activeTab === item.id && <ChevronRight size={16} />}
           </button>
@@ -61,9 +69,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
           <Settings size={20} />
           <span className="font-medium">Settings</span>
         </button>
-        <div className="mt-4 p-4 bg-slate-900 rounded-xl text-white">
-          <p className="text-xs font-semibold uppercase tracking-wider opacity-60">Pan-India Support</p>
-          <p className="text-sm mt-1">Live rates from 12k+ properties</p>
+        <div className="mt-4 p-4 bg-brand-brown rounded-xl text-white">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-brand-orange">Enterprise Tier</p>
+          <p className="text-sm mt-1 font-medium leading-tight">Live market connectivity active.</p>
         </div>
       </div>
     </div>

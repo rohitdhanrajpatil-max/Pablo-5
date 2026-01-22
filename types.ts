@@ -17,6 +17,7 @@ export interface Hotel {
 export interface OTAParameters {
   platform: string;
   rate: number;
+  roomType: string; // Added room type field
   cancellationPolicy: string;
   breakfast: boolean;
   visibilityScore: number;
@@ -37,6 +38,8 @@ export interface DemandEvent {
   impact: 'High' | 'Medium' | 'Low';
   description: string;
   suggestedUplift: number;
+  category?: string; // e.g., 'Music', 'Business', 'Festival', 'Sports'
+  recommendedStrategy?: string; // Actionable advice for this specific event
 }
 
 export interface PricingInsights {

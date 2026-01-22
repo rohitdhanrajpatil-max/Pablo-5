@@ -10,9 +10,10 @@ export const fetchMarketIntelligence = async (hotelName: string, city: string) =
     model: 'gemini-3-flash-preview',
     contents: `Analyze the hotel market in ${city} for a hotel named "${hotelName}". 
     1. Identify 5-7 major competitor hotels located within a strict 2km radius of "${hotelName}" that are in the SAME CATEGORY (e.g., Luxury, Upscale, Midscale, Economy) as "${hotelName}".
-    2. Search for 6-10 major upcoming events (concerts, conferences, festivals, local holidays) in ${city} for the next 45 days.
+    2. Search for 6-10 major upcoming events (concerts, conferences, festivals, local holidays) in ${city} for the next 45 days. 
+       For each event, provide a "category" (Music, Business, Holiday, Sports, Culture) and a "recommendedStrategy" (e.g., "Implement 2-night MLOS", "Close all discount channels", "Increase base rate by 15%").
     3. Provide current market rate trends and positioning for "${hotelName}".
-    4. For each competitor, simulate/find OTA parity data across Booking.com, MMT, and Agoda. Include parity gaps.
+    4. For each competitor, simulate/find OTA parity data across Booking.com, MMT, and Agoda. Include parity gaps and specific room types (e.g., "Deluxe Room", "King Suite").
     5. Generate a 7-day historical trend of rate parity gaps (as percentages) for "${hotelName}" across Booking.com, MakeMyTrip, and Agoda.
     Return the data as a clean JSON object.`,
     config: {
@@ -42,6 +43,7 @@ export const fetchMarketIntelligence = async (hotelName: string, city: string) =
                     properties: {
                       platform: { type: Type.STRING },
                       rate: { type: Type.NUMBER },
+                      roomType: { type: Type.STRING },
                       cancellationPolicy: { type: Type.STRING },
                       breakfast: { type: Type.BOOLEAN },
                       visibilityScore: { type: Type.NUMBER },
@@ -76,7 +78,9 @@ export const fetchMarketIntelligence = async (hotelName: string, city: string) =
                 distance: { type: Type.STRING },
                 impact: { type: Type.STRING },
                 description: { type: Type.STRING },
-                suggestedUplift: { type: Type.NUMBER }
+                suggestedUplift: { type: Type.NUMBER },
+                category: { type: Type.STRING },
+                recommendedStrategy: { type: Type.STRING }
               }
             }
           },
